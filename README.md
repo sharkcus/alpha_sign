@@ -7,6 +7,10 @@ Information about the sign can be found on the [Alpha website](https://www.alpha
 The starting code for the project was found at [https://www.teuniz.net/RS-232/](https://www.teuniz.net/RS-232/). 
 This code is now in the `RS-232` folder.
 
+Don't get too excited. This code compiles, but doesn't cause the sign to do anything. I've tried various commands,
+and I'm not even getting error messages in the responses, so it could be a hardware problem. At this point, I'm giving up,
+but PRs are welcome if you have some new ideas.
+
 ## Hardware
 
 I'm using a usb-serial device that shows up in Linux as `/dev/ttyUSB0` and a 6 conductor modular cable.
@@ -31,7 +35,7 @@ There is no makefile yet, but the code can be run from the terminal as follows:
 
 1. Navigate to the `alpha_sign` directory.
 
-2. Compile the code with `gcc hello_world.c RS-232/rs232.c alpha.c -Wall -Wextra -o2 -o hwrldgcc hello_world.c RS-232/rs232.c alpha.c -Wall -Wextra -o2 -o hwrld`
+2. Compile the code with `gcc hello_world.c RS-232/rs232.c alpha.c -Wall -Wextra -o2 -o hwrld`
 
 3. Run the code with `./hwrld`
 
