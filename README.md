@@ -27,6 +27,9 @@ At the moment, there may be some hardware connectivity issues. The following che
 4. Voltage check -- usb serial: write to RTS and read from CTS work.
    Sending serial data causes TXD pin voltage to change.
 
+There's also a jumper inside the sign that I changed to 232 from 485, but that has not worked. More details
+[here](https://www.alpha-american.com/alpha-manuals/M-Network%20Configs.pdf)
+
 ## Usage
 
 There is no makefile yet, but the code can be run from the terminal as follows:
