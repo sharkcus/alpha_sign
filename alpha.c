@@ -11,9 +11,11 @@ implements alpha sign communications protocol
 const int autobaud_len = 20, // must be at least 5.
           header_len = 5,
           cport_nr = 16,
-          bdrate = 9600;
-const char * mode = "7N2";
-const char to_all_signs[] = {ADDR_START, 'Z', '0', '0', CMD_START, 0}; // Send the following to all signs
+          bdrate = 1200;
+const char * mode = "7E1";
+const char header[] = {ADDR_START, 'Z', '0', '0', CMD_START, 0}; // Send the following to all signs
+
+unsigned char input_buffer[4096];
 
 int send_alpha_command(char * command, char * data) {
   const int offset1 = autobaud_len,
@@ -28,7 +30,7 @@ int send_alpha_command(char * command, char * data) {
     if (i < offset1) {
       buffer[i] = 0;
     } else if (i < offset2) {
-      buffer[i] = to_all_signs[i - offset1];
+      buffer[i] = header[i - offset1];
     } else if (i < offset3) {
       buffer[i] = command[i - offset2];
     } else if (i < offset4) {
@@ -54,9 +56,21 @@ int send_alpha_command(char * command, char * data) {
     }
   }
   printf("\n");
+  usleep(100000);
+  read_alpha_response();
   
   RS232_CloseComport(cport_nr);
   return(n);
 }
 
+void read_alpha_response() {
+  int n;
+  n = RS232_PollComport(cport_nr, input_buffer, 4095);
+  printf("Received %i bytes:\n", n);
+  for (int i = 0; i < n; i++) {
+    printf("%c", input_buffer[i]);
+  }
+  printf("\n");
+  return;
+}
 
