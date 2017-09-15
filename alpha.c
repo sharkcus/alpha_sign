@@ -56,7 +56,7 @@ int send_alpha_command(char * command, char * data) {
     }
   }
   printf("\n");
-  usleep(100000);
+  usleep(1000000);
   read_alpha_response();
   
   RS232_CloseComport(cport_nr);
@@ -66,9 +66,16 @@ int send_alpha_command(char * command, char * data) {
 void read_alpha_response() {
   int n;
   n = RS232_PollComport(cport_nr, input_buffer, 4095);
-  printf("Received %i bytes:\n", n);
-  for (int i = 0; i < n; i++) {
-    printf("%c", input_buffer[i]);
+  while (n > 0) {
+    printf("Received %i bytes:\n", n);
+    for (int i = 0; i < n; i++) {
+      if (input_buffer[i] < 32) {
+        printf("^%c", input_buffer[i] + 64); // print readable control characters
+      } else {
+        printf("%c", input_buffer[i]);
+      }
+    }
+    n = RS232_PollComport(cport_nr, input_buffer, 4095);
   }
   printf("\n");
   return;
